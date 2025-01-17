@@ -1,0 +1,675 @@
+
+mysql> create database EXAMINATION;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> \USE EXAMINATION;
+ERROR:
+Unknown command '\U'.
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '\USE EXAMINATION' at line 1
+mysql> USE EXAMINATION;
+Database changed
+mysql> create table CLIENT_MASTER(ClientNO VARCHAR(255) NOT NULL PRIMARY KEY UNIQUE,Name varchar(255),Address varchar(255),City varchar(255),State varchar(255),Bal_due int(34));
+ERROR 1071 (42000): Specified key was too long; max key length is 1000 bytes
+mysql> create table CLIENT_MASTER(ClientNO VARCHAR(255) unique not null primary key,Name varchar(255),Address varchar(255),City varchar(255),State varchar(255),Bal_due int(34));
+ERROR 1071 (42000): Specified key was too long; max key length is 1000 bytes
+mysql> create table CLIENT_MASTER(ClientNO VARCHAR(255) unique not null primary key,Name varchar(255),Address varchar(255),City varchar(255),State varchar(255),Bal_due int(4));
+ERROR 1071 (42000): Specified key was too long; max key length is 1000 bytes
+mysql> create table CLIENT_MASTER(ClientNO varchar(25) unique not null primary key,Name varchar(25),Address varchar(25),City varchar(55),State varchar(55),Bal_due int(4));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> DESC CLIENT_MASTER;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| ClientNO | varchar(25) | NO   | PRI | NULL    |       |
+| Name     | varchar(25) | YES  |     | NULL    |       |
+| Address  | varchar(25) | YES  |     | NULL    |       |
+| City     | varchar(55) | YES  |     | NULL    |       |
+| State    | varchar(55) | YES  |     | NULL    |       |
+| Bal_due  | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO CLIENT_MASTER VALUES("C100","ABIKUNDA","CANADA","OTTAWA","TORONTO",24000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CLIENT_MASTER VALUES("C112","ABIJURU","US124","USA","TEXAS",67800);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CLIENT_MASTER VALUES("C123","ABIZERA","US423","USA","CALIFORNIA",6800);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CLIENT_MASTER VALUES("C124","ABAYO","US234","USA","LOSANGLES",6540);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CLIENT_MASTER VALUES("C322","ABIMANA","US002","USA","NEWYORK",5540);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> UPDATE CLIENT_MASTER SET ADDRESS="C423" WHERE CLIENTNO="C100";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM CLIENT_MASTER;
++----------+----------+---------+--------+------------+---------+
+| ClientNO | Name     | Address | City   | State      | Bal_due |
++----------+----------+---------+--------+------------+---------+
+| C100     | ABIKUNDA | C423    | OTTAWA | TORONTO    |   24000 |
+| C112     | ABIJURU  | US124   | USA    | TEXAS      |   67800 |
+| C123     | ABIZERA  | US423   | USA    | CALIFORNIA |    6800 |
+| C124     | ABAYO    | US234   | USA    | LOSANGLES  |    6540 |
+| C322     | ABIMANA  | US002   | USA    | NEWYORK    |    5540 |
++----------+----------+---------+--------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT NAME FROM CLIENT_MASTER WHERE bal_due>5000;
++----------+
+| NAME     |
++----------+
+| ABIKUNDA |
+| ABIJURU  |
+| ABIZERA  |
+| ABAYO    |
+| ABIMANA  |
++----------+
+5 rows in set (0.00 sec)
+
+mysql> update client_master set bal_due=5100 where clientno="C123";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM CLIENT_MASTER;
++----------+----------+---------+--------+------------+---------+
+| ClientNO | Name     | Address | City   | State      | Bal_due |
++----------+----------+---------+--------+------------+---------+
+| C100     | ABIKUNDA | C423    | OTTAWA | TORONTO    |   24000 |
+| C112     | ABIJURU  | US124   | USA    | TEXAS      |   67800 |
+| C123     | ABIZERA  | US423   | USA    | CALIFORNIA |    5100 |
+| C124     | ABAYO    | US234   | USA    | LOSANGLES  |    6540 |
+| C322     | ABIMANA  | US002   | USA    | NEWYORK    |    5540 |
++----------+----------+---------+--------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE CLIENT_MASTER RENAME CLIENT12;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT*FROM CLIENT12;
++----------+----------+---------+--------+------------+---------+
+| ClientNO | Name     | Address | City   | State      | Bal_due |
++----------+----------+---------+--------+------------+---------+
+| C100     | ABIKUNDA | C423    | OTTAWA | TORONTO    |   24000 |
+| C112     | ABIJURU  | US124   | USA    | TEXAS      |   67800 |
+| C123     | ABIZERA  | US423   | USA    | CALIFORNIA |    5100 |
+| C124     | ABAYO    | US234   | USA    | LOSANGLES  |    6540 |
+| C322     | ABIMANA  | US002   | USA    | NEWYORK    |    5540 |
++----------+----------+---------+--------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE DEPARTMENTS(DEP_NO INT(4) UNIQUE NOT NULL PRIMARY KEY AUTO_INCREMENT,DEP_NAME VARCHAR(34),DEP_LOCATION VARCHAR(34));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> DESC DEPARTMENTS;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| DEP_NO       | int         | NO   | PRI | NULL    | auto_increment |
+| DEP_NAME     | varchar(34) | YES  |     | NULL    |                |
+| DEP_LOCATION | varchar(34) | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENTS VALUES('',"ACCOUNTING","BATIMA");
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENTS VALUES('',"FINANCE","KOICA");
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENTS VALUES('',"BIT","KOICA");
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENTS VALUES('',"MEDICINE","MAMBA");
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENTS VALUES('',"NURSING","MAMBA");
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> SELECT*FROM DEPARTMENTS;
++--------+------------+--------------+
+| DEP_NO | DEP_NAME   | DEP_LOCATION |
++--------+------------+--------------+
+|      1 | ACCOUNTING | BATIMA       |
+|      2 | FINANCE    | KOICA        |
+|      3 | BIT        | KOICA        |
+|      4 | MEDICINE   | MAMBA        |
+|      5 | NURSING    | MAMBA        |
++--------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEES(EMPL_ID INT (4) UNIQUE NOT NULL PRIMARY KEY AUTO_INCREMENT, DEP_NO INT(4),FOREIGN KEY(DEP_NO) REFERENCES DEPARTMENTS(DEP_NO),EMPL_NAME VARCHAR(24), EMPL_ADDRESS VARCHAR(34), TEL INT(12));
+Query OK, 0 rows affected, 3 warnings (0.03 sec)
+
+mysql> DESC EMPLOYEES;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| EMPL_ID      | int         | NO   | PRI | NULL    | auto_increment |
+| DEP_NO       | int         | YES  | MUL | NULL    |                |
+| EMPL_NAME    | varchar(24) | YES  |     | NULL    |                |
+| EMPL_ADDRESS | varchar(34) | YES  |     | NULL    |                |
+| TEL          | int         | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES VALUES('',1,"OLIVIER","HUYE",0783456789);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES VALUES('',2,"KELLEN","HUYE",0783452289);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES VALUES('',3,"GENEVIEVE","HUYE",0783450000);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES VALUES('',4,"DIOR","HUYE",0783450011);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES VALUES('',5,"BAHATI","HUYE",0782220011);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++---------+--------+-----------+--------------+-----------+
+| EMPL_ID | DEP_NO | EMPL_NAME | EMPL_ADDRESS | TEL       |
++---------+--------+-----------+--------------+-----------+
+|       1 |      1 | OLIVIER   | HUYE         | 783456789 |
+|       2 |      2 | KELLEN    | HUYE         | 783452289 |
+|       3 |      3 | GENEVIEVE | HUYE         | 783450000 |
+|       4 |      4 | DIOR      | HUYE         | 783450011 |
+|       5 |      5 | BAHATI    | HUYE         | 782220011 |
++---------+--------+-----------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> DESC EMPLOYEES;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| EMPL_ID      | int         | NO   | PRI | NULL    | auto_increment |
+| DEP_NO       | int         | YES  | MUL | NULL    |                |
+| EMPL_NAME    | varchar(24) | YES  |     | NULL    |                |
+| EMPL_ADDRESS | varchar(34) | YES  |     | NULL    |                |
+| TEL          | int         | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT EMPL_NAME,DEP_NAME FROM DEPARTMENTS LEFT JOIN EMPLOYEES ON DEPARTMENTS.DEP_NAME= EMPLOYEES.EMPL_NAME;
++-----------+------------+
+| EMPL_NAME | DEP_NAME   |
++-----------+------------+
+| NULL      | ACCOUNTING |
+| NULL      | FINANCE    |
+| NULL      | BIT        |
+| NULL      | MEDICINE   |
+| NULL      | NURSING    |
++-----------+------------+
+5 rows in set (0.02 sec)
+
+mysql> SELECT EMPLOYEES.EMPL_NAME,DEPARTMENTS.DEP_NAME FROM EMPLOYEES LEFT JOIN DEPARTMENTS ON DEPARTMENT.DEP_NO=EMPLOYEES.EMPL_ID;
+ERROR 1054 (42S22): Unknown column 'DEPARTMENT.DEP_NO' in 'on clause'
+mysql> SELECT EMPLOYEES.EMPL_NAME,DEPARTMENTS.DEP_NAME FROM EMPLOYEES LEFT JOIN DEPARTMENTS ON DEPARTMENTS.DEP_NO=EMPLOYEES.EMPL_ID;
++-----------+------------+
+| EMPL_NAME | DEP_NAME   |
++-----------+------------+
+| OLIVIER   | ACCOUNTING |
+| KELLEN    | FINANCE    |
+| GENEVIEVE | BIT        |
+| DIOR      | MEDICINE   |
+| BAHATI    | NURSING    |
++-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT EMPLOYEES.EMPL_NAME,DEPARTMENTS.DEP_NAME FROM EMPLOYEES RIGHT JOIN DEPARTMENTS ON DEPARTMENTS.DEP_NO=EMPLOYEES.EMPL_ID;
++-----------+------------+
+| EMPL_NAME | DEP_NAME   |
++-----------+------------+
+| OLIVIER   | ACCOUNTING |
+| KELLEN    | FINANCE    |
+| GENEVIEVE | BIT        |
+| DIOR      | MEDICINE   |
+| BAHATI    | NURSING    |
++-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEES ADD EMPL_SALARY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ALTER TABLE EMPLOYEES ADD COLUMN EMPL_SALARY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ALTER TABLE EMPLOYEES ADD EMPL_SALARY VARCHAR(34);
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE EMPLOYEES SET EMPL_SALARY="20000" WHERE EMPL_ID=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEES SET EMPL_SALARY="26000" WHERE EMPL_ID=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEES SET EMPL_SALARY="60000" WHERE EMPL_ID=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEES SET EMPL_SALARY="70000" WHERE EMPL_ID=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEES SET EMPL_SALARY="70000" WHERE EMPL_ID=;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> UPDATE EMPLOYEES SET EMPL_SALARY="70000" WHERE EMPL_ID=5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES;
++---------+--------+-----------+--------------+-----------+-------------+
+| EMPL_ID | DEP_NO | EMPL_NAME | EMPL_ADDRESS | TEL       | EMPL_SALARY |
++---------+--------+-----------+--------------+-----------+-------------+
+|       1 |      1 | OLIVIER   | HUYE         | 783456789 | 20000       |
+|       2 |      2 | KELLEN    | HUYE         | 783452289 | 26000       |
+|       3 |      3 | GENEVIEVE | HUYE         | 783450000 | 60000       |
+|       4 |      4 | DIOR      | HUYE         | 783450011 | 70000       |
+|       5 |      5 | BAHATI    | HUYE         | 782220011 | 70000       |
++---------+--------+-----------+--------------+-----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT MAX(EMPL_SALARY) AS EMPL_SALARY FROM EMPLOYEES;
++-------------+
+| EMPL_SALARY |
++-------------+
+| 70000       |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> CREATE TABLE STUDENT(StudentID VARCHAR(5),fullnames varchar(25),gender varchar(6),age int(2),department varchar(30));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> DESC STUDENT;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| StudentID  | varchar(5)  | YES  |     | NULL    |       |
+| fullnames  | varchar(25) | YES  |     | NULL    |       |
+| gender     | varchar(6)  | YES  |     | NULL    |       |
+| age        | int         | YES  |     | NULL    |       |
+| department | varchar(30) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES VALUES(1,"OLIVIER_HABINGABIRE","Male",21,"BIT");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO EMPLOYEES VALUES("1","OLIVIER_HABINGABIRE","Male",21,"BIT");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO EMPLOYEES VALUES("1","Olivier","Male",21,"BIT");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO EMPLOYEES VALUES("1","OLIVIER_HABINGABIRE","Male",21,"BIT");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO EMPLOYEES VALUES("1","OlivierHabingabire","Male","21","BIT");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO student VALUES("1","OlivierHabingabire","Male",21,"BIT");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO student VALUES("2","doirIradukunda","Male",22,"BIT");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO student VALUES("3","KellenMurekatete","Female",22,"BIT");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO student VALUES("4","GenevieveIhimbazwe","Female",18,"BIT");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from student;
++-----------+--------------------+--------+------+------------+
+| StudentID | fullnames          | gender | age  | department |
++-----------+--------------------+--------+------+------------+
+| 1         | OlivierHabingabire | Male   |   21 | BIT        |
+| 2         | doirIradukunda     | Male   |   22 | BIT        |
+| 3         | KellenMurekatete   | Female |   22 | BIT        |
+| 4         | GenevieveIhimbazwe | Female |   18 | BIT        |
++-----------+--------------------+--------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> create view Lists of students select fullnames from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'of students select fullnames from student' at line 1
+mysql> create view Lists of students as select fullnames from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'of students as select fullnames from student' at line 1
+mysql> create view Lists_of_students as select fullnames from student;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select*from list_of_students;
+ERROR 1146 (42S02): Table 'examination.list_of_students' doesn't exist
+mysql> select*from List_of_students;
+ERROR 1146 (42S02): Table 'examination.list_of_students' doesn't exist
+mysql> create view Lists_of_students as select*from student;
+ERROR 1050 (42S01): Table 'Lists_of_students' already exists
+mysql> create view Lists_of_students as select*from student;
+ERROR 1050 (42S01): Table 'Lists_of_students' already exists
+mysql>
+mysql> create view Lists as select*from student;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select*from list;
+ERROR 1146 (42S02): Table 'examination.list' doesn't exist
+mysql> select*from student;
++-----------+--------------------+--------+------+------------+
+| StudentID | fullnames          | gender | age  | department |
++-----------+--------------------+--------+------+------------+
+| 1         | OlivierHabingabire | Male   |   21 | BIT        |
+| 2         | doirIradukunda     | Male   |   22 | BIT        |
+| 3         | KellenMurekatete   | Female |   22 | BIT        |
+| 4         | GenevieveIhimbazwe | Female |   18 | BIT        |
++-----------+--------------------+--------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> Create view GIRL as select*from student where gender="female";
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> Create view boys as select*from student where gender="male";
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select*from girl;
++-----------+--------------------+--------+------+------------+
+| StudentID | fullnames          | gender | age  | department |
++-----------+--------------------+--------+------+------------+
+| 3         | KellenMurekatete   | Female |   22 | BIT        |
+| 4         | GenevieveIhimbazwe | Female |   18 | BIT        |
++-----------+--------------------+--------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from boys;
++-----------+--------------------+--------+------+------------+
+| StudentID | fullnames          | gender | age  | department |
++-----------+--------------------+--------+------+------------+
+| 1         | OlivierHabingabire | Male   |   21 | BIT        |
+| 2         | doirIradukunda     | Male   |   22 | BIT        |
++-----------+--------------------+--------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> delete from student where age<20;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from student;
++-----------+--------------------+--------+------+------------+
+| StudentID | fullnames          | gender | age  | department |
++-----------+--------------------+--------+------+------------+
+| 1         | OlivierHabingabire | Male   |   21 | BIT        |
+| 2         | doirIradukunda     | Male   |   22 | BIT        |
+| 3         | KellenMurekatete   | Female |   22 | BIT        |
++-----------+--------------------+--------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> create table SALES(Sales_No varchar(24) primary key not null unique,SalesName varchar(24),Branch varchar(34),Salesamount varchar(34),DOB VARCHAR(32));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC SALES;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Sales_No    | varchar(24) | NO   | PRI | NULL    |       |
+| SalesName   | varchar(24) | YES  |     | NULL    |       |
+| Branch      | varchar(34) | YES  |     | NULL    |       |
+| Salesamount | varchar(34) | YES  |     | NULL    |       |
+| DOB         | varchar(32) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO SALES VALUES("1","IBIJUMBA","huye","2000",21-Dec-20");
+    "> INSERT INTO SALES VALUES("1","IBIJUMBA","huye","2000",21-Dec-20");;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Dec-20");
+INSERT INTO SALES VALUES("1","IBIJUMBA","huye","2000",21-Dec-20")' at line 1
+ERROR:
+No query specified
+
+mysql> INSERT INTO SALES VALUES("1","IBIJUMBA","huye","2000",21-Dec-20");
+    "> INSERT INTO SALES VALUES("1","IBIJUMBA","huye","2000",21-Dec-20");;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Dec-20");
+INSERT INTO SALES VALUES("1","IBIJUMBA","huye","2000",21-Dec-20")' at line 1
+ERROR:
+No query specified
+
+mysql> insert into sales values("1","ibijumba","huye","2000","21-Dec-20");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into sales values("2","ibishyimbo","huye","3000","21-Dec-21");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sales values("3","ibirayi","KIGALI","4000","20-Nov-24");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sales values("4","ibimboga","KIGALI","4000","20-Nov-24");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into sales values("5","ibimboga","huye","4000","20-Nov-24");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from sales;
++----------+------------+--------+-------------+-----------+
+| Sales_No | SalesName  | Branch | Salesamount | DOB       |
++----------+------------+--------+-------------+-----------+
+| 1        | ibijumba   | huye   | 2000        | 21-Dec-20 |
+| 2        | ibishyimbo | huye   | 3000        | 21-Dec-21 |
+| 3        | ibirayi    | KIGALI | 4000        | 20-Nov-24 |
+| 4        | ibimboga   | KIGALI | 4000        | 20-Nov-24 |
+| 5        | ibimboga   | huye   | 4000        | 20-Nov-24 |
++----------+------------+--------+-------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select SUM(salesamount) from sales;
++------------------+
+| SUM(salesamount) |
++------------------+
+|            17000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select AVG(salesamount) from sales where branch="kigali";
++------------------+
+| AVG(salesamount) |
++------------------+
+|             4000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select AVG(salesamount) from sales where branch="huye";
++------------------+
+| AVG(salesamount) |
++------------------+
+|             3000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select SUM(salesamount) from sales where branch="KIGALI";
++------------------+
+| SUM(salesamount) |
++------------------+
+|             8000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select SUM(salesamount) from sales where branch="HUYE";
++------------------+
+| SUM(salesamount) |
++------------------+
+|             9000 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM SALES;
++----------+------------+--------+-------------+-----------+
+| Sales_No | SalesName  | Branch | Salesamount | DOB       |
++----------+------------+--------+-------------+-----------+
+| 1        | ibijumba   | huye   | 2000        | 21-Dec-20 |
+| 2        | ibishyimbo | huye   | 3000        | 21-Dec-21 |
+| 3        | ibirayi    | KIGALI | 4000        | 20-Nov-24 |
+| 4        | ibimboga   | KIGALI | 4000        | 20-Nov-24 |
+| 5        | ibimboga   | huye   | 4000        | 20-Nov-24 |
++----------+------------+--------+-------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE SALES SET Salesname="OLIVIER" WHERE SALES_NO=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE SALES SET Salesname="BAHATI" WHERE SALES_NO=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE SALES SET Salesname="GENE" WHERE SALES_NO=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE SALES SET Salesname="DIOR" WHERE SALES_NO=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE SALES SET Salesname="GIANT" WHERE SALES_NO=5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM SALES;
++----------+-----------+--------+-------------+-----------+
+| Sales_No | SalesName | Branch | Salesamount | DOB       |
++----------+-----------+--------+-------------+-----------+
+| 1        | OLIVIER   | huye   | 2000        | 21-Dec-20 |
+| 2        | BAHATI    | huye   | 3000        | 21-Dec-21 |
+| 3        | GENE      | KIGALI | 4000        | 20-Nov-24 |
+| 4        | DIOR      | KIGALI | 4000        | 20-Nov-24 |
+| 5        | GIANT     | huye   | 4000        | 20-Nov-24 |
++----------+-----------+--------+-------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT SALESNAME,DOB FROM SALES WHERE DOB LIKE%DEC%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%DEC%' at line 1
+mysql> SELECT DISTINCT SALESNAME,DOB FROM SALES WHERE DOB LIKE %DEC%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%DEC%' at line 1
+mysql> SELECT DISTINCT SALESNAME,DOB FROM SALES WHERE DOB LIKE "%DEC%";
++-----------+-----------+
+| SALESNAME | DOB       |
++-----------+-----------+
+| OLIVIER   | 21-Dec-20 |
+| BAHATI    | 21-Dec-21 |
++-----------+-----------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT SALESNAME FROM SALES ORDER BY DOB ASC;
++-----------+
+| SALESNAME |
++-----------+
+| GENE      |
+| DIOR      |
+| GIANT     |
+| OLIVIER   |
+| BAHATI    |
++-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT SALESNAME AND DOB FROM SALES ORDER BY DOB ASC;
++-------------------+
+| SALESNAME AND DOB |
++-------------------+
+|                 0 |
+|                 0 |
+|                 0 |
+|                 0 |
+|                 0 |
++-------------------+
+5 rows in set, 5 warnings (0.00 sec)
+
+mysql> SELECT SALESNAME,DOB FROM SALES ORDER BY DOB ASC;
++-----------+-----------+
+| SALESNAME | DOB       |
++-----------+-----------+
+| GENE      | 20-Nov-24 |
+| DIOR      | 20-Nov-24 |
+| GIANT     | 20-Nov-24 |
+| OLIVIER   | 21-Dec-20 |
+| BAHATI    | 21-Dec-21 |
++-----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEES(EMPL_ID INT(4) UNIQUE NOT NULL AUTO_INCREMENT PRIMARY KEY,First_name varchar(34),Last_name varchar(32),Email varchar(23),Phone_Number int(12),Hire_date varchar(34),Job_id int(4),Salary int(12),Commission_Pct varchar(23),manager_id int(4),Department_ID int(4));
+ERROR 1050 (42S01): Table 'employees' already exists
+mysql> CREATE TABLE EMPLOYEESS(EMPL_ID INT(4) UNIQUE NOT NULL AUTO_INCREMENT PRIMARY KEY,First_name varchar(34),Last_name varchar(32),Email varchar(23),Phone_Number int(12),Hire_date varchar(34),Job_id int(4),Salary int(12),Commission_Pct varchar(23),manager_id int(4),Department_ID int(4));
+Query OK, 0 rows affected, 6 warnings (0.02 sec)
+
+mysql> DESC EMPLOYEESS;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| EMPL_ID        | int         | NO   | PRI | NULL    | auto_increment |
+| First_name     | varchar(34) | YES  |     | NULL    |                |
+| Last_name      | varchar(32) | YES  |     | NULL    |                |
+| Email          | varchar(23) | YES  |     | NULL    |                |
+| Phone_Number   | int         | YES  |     | NULL    |                |
+| Hire_date      | varchar(34) | YES  |     | NULL    |                |
+| Job_id         | int         | YES  |     | NULL    |                |
+| Salary         | int         | YES  |     | NULL    |                |
+| Commission_Pct | varchar(23) | YES  |     | NULL    |                |
+| manager_id     | int         | YES  |     | NULL    |                |
+| Department_ID  | int         | YES  |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+11 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEESS VALUES('',"Olivier","HABINGABIRE","olivier@gmail.com",0790222833,"21-NOV-2020",1,40000,"3000",1,1);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEESS VALUES('',"Princess","IHIMBAZWE","olivier@gmail.com",0790222444,"13-SEPT-2021",2,55000,"4000",2,2);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEESS VALUES('',"Dior","IRADUKUNDA","genee@gmail.com",0789107196,"10-AUG-2021",3,87000,"1000",3,3);
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select*from employeess;
++---------+------------+-------------+-------------------+--------------+--------------+--------+--------+----------------+------------+---------------+
+| EMPL_ID | First_name | Last_name   | Email             | Phone_Number | Hire_date    | Job_id | Salary | Commission_Pct | manager_id | Department_ID |
++---------+------------+-------------+-------------------+--------------+--------------+--------+--------+----------------+------------+---------------+
+|       1 | Olivier    | HABINGABIRE | olivier@gmail.com |    790222833 | 21-NOV-2020  |      1 |  40000 | 3000           |          1 |             1 |
+|       2 | Princess   | IHIMBAZWE   | olivier@gmail.com |    790222444 | 13-SEPT-2021 |      2 |  55000 | 4000           |          2 |             2 |
+|       3 | Dior       | IRADUKUNDA  | genee@gmail.com   |    789107196 | 10-AUG-2021  |      3 |  87000 | 1000           |          3 |             3 |
++---------+------------+-------------+-------------------+--------------+--------------+--------+--------+----------------+------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> select distinct empl_id,name,salary from employeess;
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select distinct empl_id,first_name,last_name,salary from employeess;
++---------+------------+-------------+--------+
+| empl_id | first_name | last_name   | salary |
++---------+------------+-------------+--------+
+|       1 | Olivier    | HABINGABIRE |  40000 |
+|       2 | Princess   | IHIMBAZWE   |  55000 |
+|       3 | Dior       | IRADUKUNDA  |  87000 |
++---------+------------+-------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct empl_id,first_name from employeess where manager_id=100;
+Empty set (0.00 sec)
+
+mysql> select distinct first_name from employees where salary>=4800;
+ERROR 1054 (42S22): Unknown column 'first_name' in 'field list'
+mysql> select distinct empl_id,first_name from employees where salary>=4800;
+ERROR 1054 (42S22): Unknown column 'first_name' in 'field list'
+mysql> select distinct empl_id,last_name from employees where salary>=4800;
+ERROR 1054 (42S22): Unknown column 'last_name' in 'field list'
+mysql> select distinct empl_id,last_name from employeess where salary>=4800;
++---------+-------------+
+| empl_id | last_name   |
++---------+-------------+
+|       1 | HABINGABIRE |
+|       2 | IHIMBAZWE   |
+|       3 | IRADUKUNDA  |
++---------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select first_name,last_name from employeess where last_name like "%austin";
+Empty set (0.00 sec)
+
+mysql> select last_name,first_name from employeess where department_id=60 AND department_id=70 AND department_id=80;
+Empty set (0.00 sec)
+
+mysql>
