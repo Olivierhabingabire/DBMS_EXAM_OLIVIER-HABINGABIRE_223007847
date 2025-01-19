@@ -1,3 +1,5 @@
+PART-A
+QUESTION ONE
 
 mysql> create database EXAMINATION;
 Query OK, 1 row affected (0.01 sec)
@@ -61,6 +63,8 @@ mysql> SELECT*FROM CLIENT_MASTER;
 +----------+----------+---------+--------+------------+---------+
 5 rows in set (0.00 sec)
 
+QUESTION TWO----------------------------------------------------------------------------------------------------------------
+
 mysql> SELECT DISTINCT NAME FROM CLIENT_MASTER WHERE bal_due>5000;
 +----------+
 | NAME     |
@@ -72,6 +76,8 @@ mysql> SELECT DISTINCT NAME FROM CLIENT_MASTER WHERE bal_due>5000;
 | ABIMANA  |
 +----------+
 5 rows in set (0.00 sec)
+
+QUESTION THREE--------------------------------------------------------------------------------------------------------------
 
 mysql> update client_master set bal_due=5100 where clientno="C123";
 Query OK, 1 row affected (0.00 sec)
@@ -88,6 +94,7 @@ mysql> SELECT*FROM CLIENT_MASTER;
 | C322     | ABIMANA  | US002   | USA    | NEWYORK    |    5540 |
 +----------+----------+---------+--------+------------+---------+
 5 rows in set (0.00 sec)
+QUESTION FOUR---------------------------------------------------------------------------------------------------------------
 
 mysql> ALTER TABLE CLIENT_MASTER RENAME CLIENT12;
 Query OK, 0 rows affected (0.02 sec)
@@ -103,6 +110,8 @@ mysql> SELECT*FROM CLIENT12;
 | C322     | ABIMANA  | US002   | USA    | NEWYORK    |    5540 |
 +----------+----------+---------+--------+------------+---------+
 5 rows in set (0.00 sec)
+PART-B
+QUESTION SIX----------------------------------------------------------------------------------------------------------------
 
 mysql> CREATE TABLE DEPARTMENTS(DEP_NO INT(4) UNIQUE NOT NULL PRIMARY KEY AUTO_INCREMENT,DEP_NAME VARCHAR(34),DEP_LOCATION VARCHAR(34));
 Query OK, 0 rows affected, 1 warning (0.02 sec)
@@ -286,6 +295,8 @@ mysql> SELECT MAX(EMPL_SALARY) AS EMPL_SALARY FROM EMPLOYEES;
 +-------------+
 1 row in set (0.02 sec)
 
+QUESTION SEVEN--------------------------------------------------------------------------------------------------------------
+
 mysql> CREATE TABLE STUDENT(StudentID VARCHAR(5),fullnames varchar(25),gender varchar(6),age int(2),department varchar(30));
 Query OK, 0 rows affected, 1 warning (0.02 sec)
 
@@ -402,6 +413,8 @@ mysql> select*from student;
 | 3         | KellenMurekatete   | Female |   22 | BIT        |
 +-----------+--------------------+--------+------+------------+
 3 rows in set (0.00 sec)
+PART-C
+QUESTION TEN----------------------------------------------------------------------------------------------------------------
 
 mysql> create table SALES(Sales_No varchar(24) primary key not null unique,SalesName varchar(24),Branch varchar(34),Salesamount varchar(34),DOB VARCHAR(32));
 Query OK, 0 rows affected (0.02 sec)
@@ -591,6 +604,8 @@ mysql> SELECT SALESNAME,DOB FROM SALES ORDER BY DOB ASC;
 | BAHATI    | 21-Dec-21 |
 +-----------+-----------+
 5 rows in set (0.00 sec)
+
+QUESTION NINE---------------------------------------------------------------------------------------------------------------
 
 mysql> CREATE TABLE EMPLOYEES(EMPL_ID INT(4) UNIQUE NOT NULL AUTO_INCREMENT PRIMARY KEY,First_name varchar(34),Last_name varchar(32),Email varchar(23),Phone_Number int(12),Hire_date varchar(34),Job_id int(4),Salary int(12),Commission_Pct varchar(23),manager_id int(4),Department_ID int(4));
 ERROR 1050 (42S01): Table 'employees' already exists
